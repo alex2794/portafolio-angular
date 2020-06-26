@@ -12,19 +12,36 @@ export class InfoPaginaService {
     info: InfoPagina = {};
     cargada = false;
 
+    equipo: any[] = [];
+
     constructor( private  http: HttpClient ) {
 
 
-       // console.log ('Servicio de InfoPagina listo');
+        this.cargarInfo();
+        this.cargarEquipo();
+    }
 
-        this.http.get('assets/data/data-pagina.json')
-            // tslint:disable-next-line: align
-            .subscribe((resp: InfoPagina) => {
-                this.cargada = true;
-                this.info = resp;
-                console.log(resp);
+    private cargarInfo(){
+           // console.log ('Servicio de InfoPagina listo');
 
-});
+           this.http.get('assets/data/data-pagina.json')
+           // tslint:disable-next-line: align
+           .subscribe((resp: InfoPagina) => {
+               this.cargada = true;
+               this.info = resp;
+              // console.log(resp);
+
+            });
+    }
+
+    private cargarEquipo() {
+        this.http.get('https://angular-html-2cbb0.firebaseio.com/equipo.json')
+        // tslint:disable-next-line: align
+        .subscribe((resp: any) => {
+            this.equipo = resp;
+           // console.log(resp);
+
+         });
 
     }
 }
